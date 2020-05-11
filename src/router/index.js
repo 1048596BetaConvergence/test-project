@@ -6,7 +6,7 @@ import ProfilePage from '@/components/pages/ProfilePage'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   routes: [
     {
       path: '/information-page',
@@ -16,11 +16,24 @@ export default new Router({
     {
       path: '/sign-up-page',
       name: 'SignUpPage',
+      meta: {
+        authenticated: true
+      },
       component: SignUpPage
     },
     {
       path: '/profile-page',
       name: 'ProfilePage',
+      meta: {
+        authenticated: true
+      },
+      beforeEnter: (to, from, next) => {
+        if (from.meta.authenticated && window.localStorage.getItem('test-project')) {
+          next()
+        } else {
+          next(false)
+        }
+      },
       component: ProfilePage
     },
     {
@@ -29,3 +42,5 @@ export default new Router({
     }
   ]
 })
+
+export default router

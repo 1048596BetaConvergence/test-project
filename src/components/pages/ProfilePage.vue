@@ -8,26 +8,26 @@
       <div class='item-container'>
         <span> {{ descriptorName }} </span>
       </div>
-      <div class='item-container variable'>
+      <div ref='full-name-container' class='item-container variable'>
         <span class='full-text' v-if='showFullName'> {{ fullName }} </span>
-        <span v-else> {{ fullName }} </span>
-        <span @click='showMore("FullName")' v-if='fullName.length > 64' class='additional-content'> {{ showFullName ? '(show less)' : '(show more)'}} </span>
+        <span ref='full-name' v-else> {{ fullName }} </span>
+        <span @click='showMore("FullName")' v-if='fullNameWidth' class='additional-content'> {{ showFullName ? '(show less)' : '(show more)'}} </span>
       </div>
       <div class='item-container'>
         <span> {{ descriptorEmail }} </span>
       </div>
-      <div class='item-container variable'>
+      <div ref='email-container' class='item-container variable'>
         <span class='full-text' v-if='showEmail'> {{ email }} </span>
-        <span v-else> {{ email }} </span>
-        <span @click='showMore("Email")' v-if='email.length > 64' class='additional-content'> {{ showEmail ? '(show less)' : '(show more)'}} </span>
+        <span ref='email' v-else> {{ email }} </span>
+        <span @click='showMore("Email")' v-if='emailWidth' class='additional-content'> {{ showEmail ? '(show less)' : '(show more)'}} </span>
       </div>
       <div class='item-container'>
         <span> {{ descriptorHobbies }} </span>
       </div>
-      <div class='item-container variable'>
+      <div ref='hobbies-container' class='item-container variable'>
         <span class='full-text' v-if='showHobbies'> {{ hobbies }} </span>
-        <span v-else> {{ hobbies }} </span>
-        <span @click='showMore("Hobbies")' v-if='hobbies.length > 64' class='additional-content'> {{ showHobbies ? '(show less)' : '(show more)'}} </span>
+        <span ref='hobbies' v-else> {{ hobbies }} </span>
+        <span @click='showMore("Hobbies")' v-if='hobbiesWidth' class='additional-content'> {{ showHobbies ? '(show less)' : '(show more)'}} </span>
       </div>
     </div>
     <div class='button-group'>
@@ -46,9 +46,19 @@ export default {
     FlatButton
   },
   computed: {
-    ...mapGetters('user', ['fullName', 'email', 'hobbies'])
+    ...mapGetters('user', ['fullName', 'email', 'hobbies']),
+    fullNameWidth () {
+      return !this.isMounted ? false : this.$refs['full-name'].clientWidth > this.$refs['full-name-container'].clientWidth * 0.75
+    },
+    emailWidth () {
+      return !this.isMounted ? false : this.$refs['email'].clientWidth > this.$refs['email-container'].clientWidth * 0.75
+    },
+    hobbiesWidth () {
+      return !this.isMounted ? false : this.$refs['hobbies'].clientWidth > this.$refs['hobbies-container'].clientWidth * 0.75
+    }
   },
   mounted () {
+    this.isMounted = true
     setTimeout(() => {
       document.getElementById('goBack').style.opacity = 1
     }, 750)
@@ -62,11 +72,20 @@ export default {
       document.getElementById('button').style.opacity = 1
       this.disabled = false
     }, 1750)
+
+    var jsonObj = window.localStorage.getItem('test-project')
+    if (jsonObj) {
+      var user = JSON.parse(jsonObj)
+      this.changeFullName(user.fullName)
+      this.changeEmail(user.email)
+      this.changeHobbies(user.hobbies)
+    }
   },
   methods: {
-    ...mapActions('user', ['clearAll']),
+    ...mapActions('user', ['changeFullName', 'changeEmail', 'changeHobbies', 'clearAll']),
     returnToMain () {
       this.clearAll()
+      window.localStorage.clear()
       this.$router.push('information-page')
     },
     onGoBack () {
@@ -79,9 +98,10 @@ export default {
   data () {
     return {
       title: 'Profile',
-      descriptorName: 'Full Name:',
-      descriptorEmail: 'Email:',
-      descriptorHobbies: 'Hobbies',
+      descriptorName: 'Full Name: ',
+      descriptorEmail: 'Email: ',
+      descriptorHobbies: 'Hobbies: ',
+      isMounted: false,
       showFullName: false,
       showEmail: false,
       showHobbies: false,

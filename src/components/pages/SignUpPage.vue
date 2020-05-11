@@ -7,7 +7,7 @@
     <div class='sign-up-container'>
       <img src='@/assets/sign_up.jpg' />
       <form class='submit-form'>
-        <floating-label-input class='input-container' id='fullNameInput' name='Full Name' rule='required|max:128' :value='fullName' type='string' @input='updateFullName' />
+        <floating-label-input class='input-container' id='fullNameInput' name='Full Name' rule='required|max:128|alpha_spaces' :value='fullName' type='string' @input='updateFullName' />
         <floating-label-input class='input-container' id='emailInput' name='Email' rule='required|email|max:128' :value='email' type='email' @input='updateEmail' />
         <floating-label-input class='input-container' id='hobbiesInput' name='Hobbies' rule='required|max:128' :value='hobbies' type='string' @input='updateHobbies' />
       </form>
@@ -33,6 +33,7 @@ export default {
     var first = document.getElementById('fullNameInput')
     var second = document.getElementById('emailInput')
     var third = document.getElementById('hobbiesInput')
+
     setTimeout(() => {
       button.style.opacity = 1
       this.disabled = false
@@ -46,6 +47,16 @@ export default {
     setTimeout(() => {
       third.style.opacity = 1
     }, 2500)
+
+    if (this.fullName !== '') {
+      this.fullNameValid = true
+    }
+    if (/\S+@\S+\.\S+/.test(this.email)) {
+      this.emailValid = true
+    }
+    if (this.hobbies !== '') {
+      this.hobbiesValid = true
+    }
   },
   data () {
     return {
@@ -57,7 +68,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions('user', ['changeFullName', 'changeEmail', 'changeHobbies']),
+    ...mapActions('user', ['changeFullName', 'changeEmail', 'changeHobbies', 'storeLocally', 'clearAll']),
     updateFullName (input, value) {
       this.changeFullName(input)
       this.evaluatedFullName(value)
@@ -80,6 +91,8 @@ export default {
       this.hobbiesValid = value
     },
     onGoBack () {
+      window.localStorage.clear()
+      this.clearAll()
       this.$router.push('/information-page')
     },
     onSubmit () {
@@ -89,6 +102,7 @@ export default {
           this.changeFullName(this.fullName)
           this.changeEmail(this.email)
           this.changeHobbies(this.hobbies)
+          this.storeLocally()
           this.$router.push('/profile-page')
         }
       })

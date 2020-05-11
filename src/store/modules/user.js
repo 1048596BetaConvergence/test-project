@@ -19,6 +19,9 @@ const actions = {
   changeHobbies ({ commit }, payload) {
     commit('setHobbies', payload)
   },
+  storeLocally ({ commit }) {
+    commit('storeLocal')
+  },
   clearAll ({ commit }) {
     commit('clearAllState')
   }
@@ -32,6 +35,15 @@ const mutations = {
   },
   setHobbies  (state, payload) {
     state.hobbies = payload
+  },
+  storeLocal (state) {
+    var user = {
+      fullName: state.fullName,
+      email: state.email,
+      hobbies: state.hobbies
+    }
+    var jsonUser = JSON.stringify(user)
+    window.localStorage.setItem('test-project', jsonUser)
   },
   clearAllState (state) {
     state.fullName = ''

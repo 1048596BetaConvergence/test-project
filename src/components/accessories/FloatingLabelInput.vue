@@ -37,11 +37,13 @@ export default {
       document.getElementById(this.name).focus()
     },
     updateInput () {
-      if (this.errors.any()) {
-        this.$emit('input', this.input, false)
-      } else {
-        this.$emit('input', this.input, true)
-      }
+      this.$validator.validate().then(valid => {
+        if (!valid) {
+          this.$emit('input', this.input, false)
+        } else {
+          this.$emit('input', this.input, true)
+        }
+      })
     }
   }
 }

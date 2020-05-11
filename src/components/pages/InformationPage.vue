@@ -12,9 +12,9 @@
     <div class='information-container'>
       <img id='image' src='@/assets/information.jpg' />
       <span id='text'> {{ information }}  </span>
-    </div>
-    <div class='button-group'>
-      <flat-button id='button' class='flat-button' :disabled='disabled' text='Sign Up' theme='green' @click='redirect'/>
+      <div class='button-group'>
+        <flat-button id='button' class='flat-button' :disabled='disabled' text='Sign Up' theme='green' @click='redirect'/>
+      </div>
     </div>
   </div>
 </template>
@@ -23,6 +23,7 @@
 import FlatButton from '../accessories/FlatButton'
 import TimeDisplayer from '../accessories/TimeDisplayer'
 import Slider from '../accessories/Slider'
+
 export default {
   name: 'information-page',
   components: {
@@ -44,7 +45,7 @@ export default {
     }, 3500)
     setTimeout(() => {
       clock.style.opacity = 1
-    }, 3750)
+    }, 2750)
     setTimeout(() => {
       image.style.opacity = 1
     }, 1500)
@@ -77,7 +78,7 @@ export default {
   flex-direction: column;
   position: relative;
   .global-time-watch {
-    animation: 2s linear 2s 1 spinnerDirect;
+    animation: 1s linear 2s 1 spinnerDirect;
     opacity: 0;
     position: absolute;
     top: 5px;
@@ -134,22 +135,17 @@ export default {
       align-items: center;
       height: auto;
     }
-  }
-  .button-group {
-    position: absolute;
-    z-index: 1;
-    bottom: 15%;
-    width: 100%;
-    left: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    .flat-button {
-      opacity: 0;
-      animation: 1s ease-out 3s 1 resize;
-      -webkit-user-select: none;
-      width: 80px;
-      height: 30px;
+    .button-group {
+      padding-top: 5%;
+      align-items: center;
+      justify-content: center;
+      .flat-button {
+        opacity: 0;
+        animation: 1s ease-out 3s 1 resize;
+        -webkit-user-select: none;
+        width: 80px;
+        height: 30px;
+      }
     }
   }
 }
