@@ -1,6 +1,7 @@
 # test-project
 
-> A Vue.js project
+> A Vue.js project that work best with Chrome. (Tested on Google Chrome and Microsoft Edge)
+> Warning: Design on edge is uglier on the profile page.
 
 ## Build Setup
 
