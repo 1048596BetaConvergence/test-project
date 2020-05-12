@@ -6,7 +6,11 @@ import ProfilePage from '@/components/pages/ProfilePage'
 
 Vue.use(Router)
 
+<<<<<<< HEAD
 const router = new Router({
+=======
+export default new Router({
+>>>>>>> dc57ad0f1776b5cd8d3704caed4c4ce23c6aa953
   routes: [
     {
       path: '/information-page',
@@ -16,14 +20,18 @@ const router = new Router({
     {
       path: '/sign-up-page',
       name: 'SignUpPage',
+<<<<<<< HEAD
       meta: {
         authenticated: true
       },
+=======
+>>>>>>> dc57ad0f1776b5cd8d3704caed4c4ce23c6aa953
       component: SignUpPage
     },
     {
       path: '/profile-page',
       name: 'ProfilePage',
+<<<<<<< HEAD
       meta: {
         authenticated: true
       },
@@ -34,6 +42,8 @@ const router = new Router({
           next(false)
         }
       },
+=======
+>>>>>>> dc57ad0f1776b5cd8d3704caed4c4ce23c6aa953
       component: ProfilePage
     },
     {
@@ -42,5 +52,8 @@ const router = new Router({
     }
   ]
 })
+<<<<<<< HEAD
 
 export default router
+=======
+>>>>>>> dc57ad0f1776b5cd8d3704caed4c4ce23c6aa953
