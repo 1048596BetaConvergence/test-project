@@ -40,7 +40,7 @@ const router = new Router({
     },
     {
       path: '*',
-      redirect: '/'
+      redirect: '/information-page'
     }
   ]
 })
