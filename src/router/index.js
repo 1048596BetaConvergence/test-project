@@ -30,15 +30,17 @@ const router = new Router({
       beforeEnter: (to, from, next) => {
         if (from.meta.authenticated && window.localStorage.getItem('test-project')) {
           next()
-        } else {
+        } else if (from.name === 'SignUpPage' || from.name === 'InformationPage') {
           next(false)
+        } else {
+          next('/information-page')
         }
       },
       component: ProfilePage
     },
     {
       path: '*',
-      redirect: '/information-page'
+      redirect: '/'
     }
   ]
 })

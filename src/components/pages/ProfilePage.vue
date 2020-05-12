@@ -86,10 +86,10 @@ export default {
     returnToMain () {
       this.clearAll()
       window.localStorage.clear()
-      this.$router.push('information-page')
+      this.$router.push('/information-page')
     },
     onGoBack () {
-      this.$router.push('sign-up-page')
+      this.$router.push('/sign-up-page')
     },
     showMore (variable) {
       this['show' + variable] = !this['show' + variable]
